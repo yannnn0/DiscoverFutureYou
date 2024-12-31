@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遇见未来的你</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://ai-public.mastergo.com/gen_page/tailwind-custom.css" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script>
+    tailwind.config={theme:{extend:{colors:{primary:'#FF7B54'},borderRadius:{'none':'0px','sm':'2px',DEFAULT:'4px','md':'8px','lg':'12px','xl':'16px','2xl':'20px','3xl':'24px','full':'9999px','button':'4px'}}}}
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+</head>
+<body>
+    <!-- 引导页 -->
+    <section id="intro-page" class="page active relative h-screen w-full overflow-hidden bg-gradient-to-br from-[#E6F3FF] to-[#FFE6E6]">
+        <div class="absolute inset-0">
+            <img src="https://ai-public.mastergo.com/ai/img_res/b2a047af048573e635e9b791256d2b03.jpg" class="w-full h-full object-cover" alt="背景图"/>
+        </div>
+        <div class="relative h-full flex flex-col items-center justify-center px-8 text-center">
+            <h1 class="text-2xl font-medium text-gray-800 leading-relaxed mb-6 opacity-0 animate-fade-in">
+                每个人都能够按照自己喜欢的方式去规划自己的一生
+            </h1>
+            <p class="text-base text-gray-600 leading-relaxed mb-12 opacity-0 animate-fade-in-delay-500">
+                通过3-5个关键词，探索未来的你，揭开理想生活的面纱
+            </p>
+            <button id="start-btn" class="!rounded-button w-[280px] h-[48px] bg-gradient-to-r from-[#FFB75E] to-primary text-white text-lg font-medium shadow-lg transform hover:scale-105 transition-transform duration-200 ease-in-out opacity-0 animate-fade-in-delay-800">
+                开始探索
+            </button>
+            <p class="mt-3 text-sm text-gray-500 opacity-0 animate-fade-in-delay-1000">
+                不到1分钟，开启你的未来旅程
+            </p>
+        </div>
+    </section>
+
+    <!-- 关键词选择页 -->
+    <section id="keywords-page" class="page hidden">
+        <body class="bg-white min-h-screen">
+            <main class="px-5 pt-8 pb-32">
+                <div class="text-center mb-8">
+                    <h1 class="text-2xl font-medium text-gray-800 mb-3">选择3-5个最能描述你未来的关键词</h1>
+                    <p class="text-sm text-gray-500">请选择最能代表你个性和未来需求的关键词</p>
+                </div>
+                <div class="mb-6">
+                    <div class="flex justify-around text-gray-600 mb-6">
+                        <button class="pb-2 category-selected">生活方式</button>
+                        <button class="pb-2">兴趣爱好</button>
+                        <button class="pb-2">价值观</button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button class="tag-item border rounded-lg py-3 px-2 text-sm text-gray-600 tag-selected">健康生活</button>
+                        <button class="tag-item border rounded-lg py-3 px-2 text-sm text-gray-600">自由探索</button>
+                        <button class="tag-item border rounded-lg py-3 px-2 text-sm text-gray-600">慢生活</button>
+                        <button class="tag-item border rounded-lg py-3 px-2 text-sm text-gray-600">数字游民</button>
+                        <button class="tag-item border rounded-lg py-3 px-2 text-sm text-gray-600">极简主义</button>
+                        <button class="tag-item border rounded-lg py-3 px-2 text-sm text-gray-600">环保生活</button>
+                        <button class="tag-item border rounded-lg py-3 px-2 text-sm text-gray-600">城市生活</button>
+                        <button class="tag-item border rounded-lg py-3 px-2 text-sm text-gray-600">乡村生活</button>
+                        <button class="tag-item border rounded-lg py-3 px-2 text-sm text-gray-600">冒险精神</button>
+                    </div>
+                    <div class="relative mt-4">
+                        <input type="text" placeholder="输入自定义关键词" class="w-full px-4 py-2 bg-gray-100 rounded-lg text-sm text-gray-600 focus:outline-none border-none"/>
+                        <button class="absolute right-0 top-1/2 transform -translate-y-1/2 px-6 py-1.5 bg-primary text-white rounded-lg text-sm transition-transform active:scale-95 hover:opacity-90">添加</button>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <p class="text-sm text-gray-500 mb-3">已选择 1/5</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
+                            健康生活
+                            <button class="hover:opacity-80">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="fixed bottom-8 left-0 w-full px-5">
+                    <button id="generate-btn" class="w-full !rounded-button bg-primary text-white py-4 font-medium shadow-lg shadow-primary/20 active:transform active:scale-98 transition-transform">
+                        生成未来日记
+                    </button>
+                </div>
+            </main>
+        </body>
+    </section>
+
+    <!-- 日记展示页 -->
+    <section id="diary-page" class="page hidden text-gray-800">
+        <div class="min-h-screen pb-24">
+            <header class="fixed top-0 w-full bg-white/80 backdrop-blur-sm z-10 px-6 py-4">
+                <h1 class="text-2xl font-bold text-gray-800 text-left">遇见未来的你</h1>
+                <button class="absolute top-4 right-6 text-gray-600"><i class="fas fa-music"></i></button>
+                <p class="text-sm text-gray-500 mt-1 text-left">未来日记</p>
+                <p class="text-xs text-gray-400 mt-1 text-left">2024年3月18日 星期一</p>
+            </header>
+            
+            <main class="px-6 pt-28">
+                <div class="diary-content space-y-8">
+                    <section>
+                        <div class="flex items-center gap-2 mb-3">
+                            <h2 class="text-lg font-bold text-gray-700">青年时期</h2>
+                            <div class="flex-1 gradient-divider"></div>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed border-l-4 border-primary pl-4" data-content=""></p>
+                    </section>
+                    
+                    <section>
+                        <div class="flex items-center gap-2 mb-3">
+                            <h2 class="text-lg font-bold text-gray-700">中年时期</h2>
+                            <div class="flex-1 gradient-divider"></div>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed border-l-4 border-primary pl-4" data-content=""></p>
+                    </section>
+                    
+                    <section>
+                        <div class="flex items-center gap-2 mb-3">
+                            <h2 class="text-lg font-bold text-gray-700">老年时期</h2>
+                            <div class="flex-1 gradient-divider"></div>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed border-l-4 border-primary pl-4" data-content=""></p>
+                    </section>
+                    
+                    <section>
+                        <div class="text-center">
+                            <span class="summary-text" style="font-size: 1.2rem; font-weight: 800; font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.8; font-style: italic; background: linear-gradient(45deg, #FF6A39, #FF9D7A); -webkit-background-clip: text; background-clip: text; color: transparent; padding: 0.5em 0;"></span>
+                        </div>
+                    </section>
+                </div>
+            </main>
+            
+            <footer class="fixed bottom-0 left-0 w-full bg-white/80 backdrop-blur-sm px-6 py-4">
+                <div class="flex gap-3 mb-3">
+                    <button class="flex-1 py-3 bg-gray-100 text-gray-600 !rounded-button">
+                        <i class="fas fa-edit mr-2"></i>编辑
+                    </button>
+                    <button class="flex-1 py-3 bg-primary text-white !rounded-button">
+                        <i class="fas fa-save mr-2"></i>保存
+                    </button>
+                    <button class="flex-1 py-3 bg-[#29C775] text-white !rounded-button">
+                        <i class="fas fa-share-alt mr-2"></i>分享
+                    </button>
+                </div>
+                <p class="text-xs text-center text-gray-500">记录美好时光，展望光明未来</p>
+            </footer>
+        </div>
+    </section>
+
+    <!-- 分享页面 -->
+    <section id="share-page" class="page hidden bg-white min-h-screen">
+        <nav class="fixed top-0 left-0 right-0 h-14 bg-white flex items-center justify-between px-4 border-b z-50">
+            <h1 class="text-lg font-medium">分享</h1>
+            <button class="w-8 h-8 flex items-center justify-center close-share-btn">
+                <i class="fas fa-times text-gray-600"></i>
+            </button>
+        </nav>
+        <main class="pt-20 px-4 pb-24">
+            <div class="text-center mb-8">
+                <h2 class="text-xl font-medium mb-2">分享你的未来日记，激励更多人</h2>
+                <p class="text-gray-500 text-sm">分享后可获得额外 3 次生成机会</p>
+            </div>
+            <div class="share-card rounded-lg p-4 mb-8">
+                <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                    <p class="text-gray-700 leading-relaxed share-text">"我通过'遇见未来的你'生成了属于我的未来日记，来看看我未来的生活吧！这段旅程让我对未来充满期待，也希望能激励更多人探索自己的可能。"</p>
+                </div>
+                <div class="flex justify-end">
+                    <button class="text-primary text-sm flex items-center edit-share-text-btn">
+                        <i class="fas fa-pen-to-square mr-1"></i>
+                        编辑文案
+                    </button>
+                </div>
+            </div>
+            <div class="grid grid-cols-4 gap-6 mb-8">
+                <div class="share-platform text-center" data-platform="wechat">
+                    <div class="w-14 h-14 mx-auto bg-[#07C160] rounded-full flex items-center justify-center mb-2 shadow-md">
+                        <i class="fab fa-weixin text-white text-2xl"></i>
+                    </div>
+                    <p class="text-sm text-gray-600">微信好友</p>
+                </div>
+                <div class="share-platform text-center" data-platform="moments">
+                    <div class="w-14 h-14 mx-auto bg-[#07C160] rounded-full flex items-center justify-center mb-2 shadow-md">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <p class="text-sm text-gray-600">朋友圈</p>
+                </div>
+                <div class="share-platform text-center" data-platform="weibo">
+                    <div class="w-14 h-14 mx-auto bg-[#E6162D] rounded-full flex items-center justify-center mb-2 shadow-md">
+                        <i class="fab fa-weibo text-white text-2xl"></i>
+                    </div>
+                    <p class="text-sm text-gray-600">微博</p>
+                </div>
+                <div class="share-platform text-center" data-platform="xiaohongshu">
+                    <div class="w-14 h-14 mx-auto bg-[#FE2C55] rounded-full flex items-center justify-center mb-2 shadow-md">
+                        <i class="fas fa-book text-white text-2xl"></i>
+                    </div>
+                    <p class="text-sm text-gray-600">小红书</p>
+                </div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-4">
+                <div class="flex items-start">
+                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3 flex-shrink-0">
+                        <i class="fas fa-gift text-primary"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-medium mb-1">分享获得奖励</h3>
+                        <p class="text-sm text-gray-500 leading-relaxed">成功分享后可获得 3 次生成机会，让你能创造更多精彩的未来日记！每日首次分享必得奖励。</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div class="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
+            <button class="share-btn w-full h-12 bg-[#FF7B54] text-white font-medium !rounded-button flex items-center justify-center">
+                立即分享
+            </button>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+
+    <style>
+        .page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .animate-fade-in-delay-500 {
+            animation: fadeIn 0.8s ease-out 0.5s forwards;
+        }
+        .animate-fade-in-delay-800 {
+            animation: fadeIn 0.8s ease-out 0.8s forwards;
+        }
+        .animate-fade-in-delay-1000 {
+            animation: fadeIn 0.8s ease-out 1s forwards;
+        }
+        .tag-item {
+            transition: all 0.3s ease;
+        }
+        .tag-item:active {
+            transform: scale(0.95);
+        }
+        .tag-selected {
+            background-color: rgb(255, 123, 84, 0.1);
+            color: #FF7B54;
+            border-color: #FF7B54;
+        }
+        .category-selected {
+            color: #FF7B54;
+            border-bottom: 2px solid #FF7B54;
+        }
+        .hidden {
+            display: none;
+        }
+        body {
+            background: linear-gradient(135deg, #FFF9F4 0%, #FAF5F0 100%);
+            min-height: 100vh;
+        }
+        .diary-content {
+            animation: fadeIn 0.8s ease-in;
+        }
+        .gradient-divider {
+            height: 1px;
+            background: linear-gradient(90deg, #CCCCCC 0%, transparent 100%);
+            margin: 16px 0;
+        }
+        .summary-text {
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</body>
+</html> 
